@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lab10.css">
+    <script src="lab10.js"></script>
+    <title>Lab 10</title>
+</head>
+<body>
+    <h1>City of New <span>Yuck</span></h1>
+    <h2>Stomach-churning data lookup tool</h2>
+    <table id="buttonTable">
+        <tr>
+            <td id="ratButton">Rat Inspections</td>
+            <td id="restoButton">Restaurant Inspections</td>
+            <td id="schoolButton">School Cafeteria Inspections</td>
+        </tr>
+    </table>
+    <div id="results">
+        <table id="searchTable">
+            <tr>
+                <td>Search By</td>
+            </tr>
+            <tr>
+                <td><label for="firstCriteriaValue" id="firstCriteriaName"></label></td>
+                <td><input type="text" id="firstCriteriaValue" name="firstCriteriaValue"></td>
+            </tr>
+            <tr>
+                <td><label for="secondCriteriaValue" id="secondCriteriaName"></label></td>
+                <td><input type="text" id="secondCriteriaValue" name="secondCriteriaValue"></td>
+            </tr>
+        </table>
+        <h3>Search Results</h3>
+        <p id="numOfInspections"></p>
+        <p id="numOfResults"></p>
+        <table id="resultTable"></table>
+    </div>
+    
+</body>
+</html>
