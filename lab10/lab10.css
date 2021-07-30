@@ -43,11 +43,13 @@ h2 {
     background-color: blue;
 }
 
-#resultTable {
+#resultMain {
     border-collapse: collapse;
 }
 
-#resultTable th {
+
+#resultMain th {
+    border-collapse: collapse;
     border-style: solid;
     text-align: center;
     padding-left: 10px;
@@ -55,8 +57,13 @@ h2 {
 }
 
 #resultTable td {
+    border-collapse: collapse;
     border-style: solid;
     text-align: center;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.hidden {
+    display: none;
 }

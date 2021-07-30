@@ -6,6 +6,7 @@ const asyncRequest = new XMLHttpRequest();
 
 let data;
 let resultTable;
+let resultHeading;
 
 // On load, sets event listeners for index page
 function setMainListeners() {
@@ -47,6 +48,7 @@ function setResultListeners() {
     document.getElementById('firstCriteriaValue').addEventListener('input', search);
     document.getElementById('secondCriteriaValue').addEventListener('input', search);
     resultTable = document.getElementById('resultTable');
+    resultHeading = document.getElementById('resultHeading');
 }
 
 // Searches the dataset based on the values entered in the search bars
@@ -61,52 +63,104 @@ function search() {
     // If anything is entered into the borough search, filters all rows that match regardles of dataset
     if (secondSearch) {
         returnedData = returnedData.filter((element) => {
-            return element['boro'].toLowerCase().contains(secondSearch) || element['borough'].toLowerCase().contains(secondSearch);
+            if (element['boro']) {
+                return element['boro'].toLowerCase().includes(secondSearch);
+            } else if (element['borough']) {
+                return element['borough'].toLowerCase().includes(secondSearch);
+            }
         });
     }
     // First checks which dataset is being searched, then filters using the relevant key and calls the appropriate print function
     if (firstCriteria === 'Street') {
         if (firstSearch) {
             returnedData = returnedData.filter((element) => {
-                return element['street_name'].toLowerCase().contains(firstSearch);
+                if (element['street_name']) {
+                    return element['street_name'].toLowerCase().includes(firstSearch);
+                }
             });
         }
         printRatResults(returnedData);
     } else if (firstCriteria === 'Cuisine') {
         if (firstSearch) {
             returnedData = returnedData.filter((element) => {
-                return element['cuisine_description'].toLowerCase().contains(firstSearch);
+                if (element['cuisine_description']) {
+                    return element['cuisine_description'].toLowerCase().includes(firstSearch);
+                }
             });
         }
         printRestoResults(returnedData);
     } else if (firstCriteria === 'School Name') {
         if (firstSearch) {
             returnedData = returnedData.filter((element) => {
-                return element['schoolname'].toLowerCase().contains(firstSearch);
+                if (element['schoolname']) {
+                    return element['schoolname'].toLowerCase().includes(firstSearch);
+                }
             });
         }
         printSchoolResults(returnedData);
+    }
+    // Checks if both search bars are empty, and if so clears the result table
+    if (!firstSearch && !secondSearch) {
+        clearSearch();
     }
 }
 
 // Clears the result table
 function clearSearch() {
-
+    resultTable.innerHTML = '';
+    resultHeading.className = 'hidden';
 }
 
 // Prints the results for the rat inspection table
 function printRatResults(results) {
-
+    let resultString = '';
+    results.forEach((element) => {
+        resultString += '<tr>';
+        resultString += `<td>${element['street_name']}</td>`;
+        resultString += `<td>${element['house_number']}</td>`;
+        resultString += `<td>${element['borough']}</td>`;
+        resultString += `<td>${element['inspection_date']}</td>`;
+        resultString += `<td>${element['result']}</td>`;
+        resultString += '</tr>';
+    });
+    resultHeading.className = '';
+    resultTable.innerHTML = resultString;
 }
 
 // Prints the results for the restaurant inspection table
 function printRestoResults(results) {
-
+    let resultString = '';
+    results.forEach((element) => {
+        resultString += '<tr>';
+        resultString += `<td>${element['dba']}</td>`;
+        resultString += `<td>${element['boro']}</td>`;
+        resultString += `<td>${element['street']}</td>`;
+        resultString += `<td>${element['zipcode']}</td>`;
+        resultString += `<td>${element['cuisine_description']}</td>`;
+        resultString += `<td>${element['inspection_date']}</td>`;
+        resultString += `<td>${element['violation_description']}</td>`;
+        resultString += `<td>${element['critical_flag']}</td>`;
+        resultString += '</tr>';
+    });
+    resultHeading.className = '';
+    resultTable.innerHTML = resultString;
 }
 
 // Prints the results for the cafeteria inspection table
 function printSchoolResults(results) {
-
+    let resultString = '';
+    results.forEach((element) => {
+        resultString += '<tr>';
+        resultString += `<td>${element['schoolname']}</td>`;
+        resultString += `<td>${element['borough']}</td>`;
+        resultString += `<td>${element['street']}</td>`;
+        resultString += `<td>${element['zipcode']}</td>`;
+        resultString += `<td>${element['inspectiondate']}</td>`;
+        resultString += `<td>${element['violationdescription']}</td>`;
+        resultString += '</tr>';
+    });
+    resultHeading.classNameName = '';
+    resultTable.innerHTML = resultString;
 }
 
 setMainListeners();
